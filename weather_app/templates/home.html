@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    
+</head>
+<body>
+    <section class="hero is-danger">
+        <div class="hero-body  has-text-centered">
+            <div class="container">
+                <h1 class="title">
+                    Django weather App
+                </h1>
+            </div>
+        </div>
+    </section>
+    {% if weather_data %}
+        <section class="section">
+            <div class="box">
+                <div class="columns">
+                    {% for city_data in weather_data %}
+                    <div class="column has-text-centered">
+                        <img src="https://openweathermap.org/img/w/{{ city_data.icon }}.png" alt="{{ city_data.des }}" width="100">
+                        <div class="title">
+                        <h2>{{ city_data.city_name }}</h2>
+                        </div>
+                        <p>{{ city_data.des }}</p>
+                        <p>{{ city_data.temp }}°C</p>
+                        <p>{{ city_data.day }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %} 
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <input class="input" type="text" placeholder="City Name" name="city">
+                            </div>
+                            <div class="control">
+                                <button class="button  is-danger">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+     {% if user_city_data %}
+        <div class="columns">
+            <div class="column is-offset-4 is-4">
+                <div class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-50x50">
+                                <img src="http://openweathermap.org/img/w/{{ user_city_data.icon }}.png"
+                                    alt="Weather Icon">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="title">{{ user_city_data.city_name }}</span>
+                                    <br>
+                                    <span class="subtitle">{{ user_city_data.temp }}° C</span>
+                                    <br>{{ user_city_data.des }}
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+    {% if user_forecast_data %}
+        <section class="section">
+            <div class="box">
+                <div class="columns is-multiline">
+                    {% for forecast in user_forecast_data %}
+                    <div class="column is-2"> 
+                        <div class="box">
+                            <div class="has-text-centered">
+                                <img src="https://openweathermap.org/img/w/{{ forecast.icon }}.png" alt="{{ forecast.des }}">
+                                <h2>{{ forecast.city_name }}</h2>
+                                <p>{{ forecast.des }}</p>
+                                <p>{{ forecast.temp }}°C</p>
+                                <p>{{ forecast.date }}</p>
+                                <p>{{ forecast.time }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+ 
+
+
+
+ 
+
+   
+    <footer class="footer">
+    </footer>
+
+
+
+
+</body>
+</html> 
+
+
